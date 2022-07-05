@@ -16,8 +16,9 @@ public class CreditCard {
     @Id
     private String id;
     private String cardNumber;
-    private LocalDate expirationDate;
     private String cvv;
+    private LocalDate expirationDate;
+    private Double consumed;
     private Double creditLine;
     private String personalCustomerId;
     private String businessCustomerId;

@@ -1,10 +1,8 @@
 package com.nttdata.creditservice.controller;
 
 import com.nttdata.creditservice.dto.BusinessCreditDto;
-import com.nttdata.creditservice.dto.CreditCardDto;
 import com.nttdata.creditservice.dto.CreditDto;
 import com.nttdata.creditservice.dto.PersonalCreditDto;
-import com.nttdata.creditservice.service.ICreditCardService;
 import com.nttdata.creditservice.service.ICreditService;
 import com.nttdata.creditservice.util.Constants;
 import com.nttdata.creditservice.util.RequestValidator;

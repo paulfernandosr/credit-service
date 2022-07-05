@@ -37,22 +37,6 @@ public class CreditServiceImpl implements ICreditService {
     }
 
     @Override
-    public Mono<CreditDto> register(CreditDto creditDto) {
-        Mono<CreditDto> registeredCredit = Mono.just(CreditMapper.toModel(creditDto))
-                .flatMap(credit -> repo.save(credit.toBuilder().id(null).build()).map(CreditMapper::toDto));
-
-        if (creditDto.getPersonalCustomerId() != null) {
-            return customerService.getPersonalCustomerById(creditDto.getPersonalCustomerId())
-                    .flatMap(customerDto -> repo.existsByPersonalCustomerId(customerDto.getId())
-                            .flatMap(exists -> (!exists) ? registeredCredit : Mono.error(new DuplicateCreditException(
-                                    String.format(Constants.CREDIT_DUPLICATED_BY_A_FIELD, Constants.PERSONAL_CUSTOMER_ID, customerDto.getId())))));
-        } else if (creditDto.getBusinessCustomerId() != null) {
-            return customerService.getBusinessCustomerById(creditDto.getBusinessCustomerId()).flatMap(customer -> registeredCredit);
-        }
-        return Mono.error(new BadRequestException(Constants.CUSTOMER_ID_IS_REQUIRED));
-    }
-
-    @Override
     public Mono<PersonalCreditDto> registerPersonal(PersonalCreditDto creditDto) {
         return customerService.getPersonalCustomerById(creditDto.getPersonalCustomerId())
                 .map(customerDto -> CreditMapper.toModel(creditDto))

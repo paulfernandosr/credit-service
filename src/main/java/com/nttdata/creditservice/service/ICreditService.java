@@ -10,8 +10,6 @@ public interface ICreditService {
 
     Mono<CreditDto> getById(String id);
 
-    Mono<CreditDto> register(CreditDto creditDto);
-
     Mono<PersonalCreditDto> registerPersonal(PersonalCreditDto creditDto);
 
     Mono<BusinessCreditDto> registerBusiness(BusinessCreditDto creditDto);

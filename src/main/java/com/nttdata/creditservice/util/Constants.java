@@ -31,6 +31,8 @@ public class Constants {
     public static final String VIOLATED_CONSTRAINTS = "Restrictions were violated";
     public static final String NOT_NULL = "Must not be null";
     public static final String CUSTOMER_ID_IS_REQUIRED = "personalCustomerId or businessCustomerId is required";
+    public static final String CREDIT_LINE_IS_LESS_THAN_ZERO = "Credit line is less than 0";
+    public static final String CONSUMPTION_IS_LESS_THAN_ZERO = "Consumption is less than 0";
     public static final String CREDIT_DUPLICATED_BY_A_FIELD = "There is already a bank account with %s: %s";
     public static final String CREDIT_DUPLICATED_BY_TWO_FIELDS = "There is already a bank account with %s: %s or %s: %s";
     public static final String UTILITY_CLASS = "Utility class";

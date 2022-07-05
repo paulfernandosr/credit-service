@@ -43,7 +43,7 @@ public class CreditCardServiceImpl implements ICreditCardService {
                                 creditCard.getPersonalCustomerId())
                         .flatMap(exists -> {
                             if (Boolean.FALSE.equals(exists)) {
-                                return repo.save(creditCard.toBuilder().id(null).build()).map(CreditMapper::toPersonalDto);
+                                return repo.save(creditCard.toBuilder().id(null).consumed(0.0).build()).map(CreditMapper::toPersonalDto);
                             } else {
                                 PersonalCreditCardDto duplicateCreditCardDto = CreditMapper.toPersonalDto(creditCard);
                                 return Mono.error(new DuplicateCreditException(
@@ -61,7 +61,7 @@ public class CreditCardServiceImpl implements ICreditCardService {
                 .flatMap(creditCard -> repo.existsByCardNumber(creditCard.getCardNumber())
                         .flatMap(exists -> {
                             if (Boolean.FALSE.equals(exists)) {
-                                return repo.save(creditCard.toBuilder().id(null).build()).map(CreditMapper::toBusinessDto);
+                                return repo.save(creditCard.toBuilder().id(null).consumed(0.0).build()).map(CreditMapper::toBusinessDto);
                             } else {
                                 BusinessCreditCardDto duplicateCreditCardDto = CreditMapper.toBusinessDto(creditCard);
                                 return Mono.error(new DuplicateCreditException(
@@ -81,6 +81,7 @@ public class CreditCardServiceImpl implements ICreditCardService {
                                 .cardNumber(creditDtoReq.getCardNumber())
                                 .expirationDate(creditDtoReq.getExpirationDate())
                                 .cvv(creditDtoReq.getCvv())
+                                .consumed(creditDtoReq.getConsumed())
                                 .creditLine(creditDtoReq.getCreditLine())
                                 .personalCustomerId(creditDtoReq.getPersonalCustomerId())
                                 .businessCustomerId(creditDtoReq.getBusinessCustomerId())

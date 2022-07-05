@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 import javax.validation.constraints.AssertTrue;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
@@ -26,6 +27,11 @@ public class CreditCardDto {
     private LocalDate expirationDate;
 
     @NotNull(message = Constants.NOT_NULL)
+    @Min(value = 0, message = Constants.CONSUMPTION_IS_LESS_THAN_ZERO)
+    private Double consumed;
+
+    @NotNull(message = Constants.NOT_NULL)
+    @Min(value = 0, message = Constants.CREDIT_LINE_IS_LESS_THAN_ZERO)
     private Double creditLine;
 
     private String personalCustomerId;

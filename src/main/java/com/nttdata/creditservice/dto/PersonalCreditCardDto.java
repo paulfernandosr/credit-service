@@ -5,6 +5,7 @@ import com.nttdata.creditservice.util.Constants;
 import lombok.Builder;
 import lombok.Getter;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
@@ -24,7 +25,10 @@ public class PersonalCreditCardDto {
     @NotNull(message = Constants.NOT_NULL)
     private String cvv;
 
+    private Double consumed;
+
     @NotNull(message = Constants.NOT_NULL)
+    @Min(value = 0, message = Constants.CREDIT_LINE_IS_LESS_THAN_ZERO)
     private Double creditLine;
 
     @NotNull(message = Constants.NOT_NULL)
