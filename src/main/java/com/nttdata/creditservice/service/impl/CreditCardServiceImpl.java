@@ -1,7 +1,8 @@
 package com.nttdata.creditservice.service.impl;
 
+import com.nttdata.creditservice.dto.BusinessCreditCardDto;
 import com.nttdata.creditservice.dto.CreditCardDto;
-import com.nttdata.creditservice.exception.BadRequestException;
+import com.nttdata.creditservice.dto.PersonalCreditCardDto;
 import com.nttdata.creditservice.exception.CreditNotFoundException;
 import com.nttdata.creditservice.exception.DuplicateCreditException;
 import com.nttdata.creditservice.repo.ICreditCardRepo;
@@ -34,24 +35,41 @@ public class CreditCardServiceImpl implements ICreditCardService {
     }
 
     @Override
-    public Mono<CreditCardDto> register(CreditCardDto creditCardDto) {
-        Mono<CreditCardDto> registeredCreditCard = Mono.just(CreditMapper.toModel(creditCardDto))
-                .flatMap(credit -> repo.existsByCardNumber(credit.getCardNumber())
-                        .flatMap(exists -> (!exists)
-                                ? repo.save(credit.toBuilder().id(null).build()).map(CreditMapper::toDto)
-                                : Mono.error(new DuplicateCreditException(
-                                String.format(Constants.CREDIT_DUPLICATED_BY_A_FIELD,
-                                        Constants.CARD_NUMBER, credit.getCardNumber())))));
+    public Mono<PersonalCreditCardDto> registerPersonal(PersonalCreditCardDto creditCardDto) {
+        return customerService.getPersonalCustomerById(creditCardDto.getPersonalCustomerId())
+                .map(customerDto -> CreditMapper.toModel(creditCardDto))
+                .flatMap(creditCard -> repo.existsByCardNumberOrPersonalCustomerId(
+                                creditCard.getCardNumber(),
+                                creditCard.getPersonalCustomerId())
+                        .flatMap(exists -> {
+                            if (Boolean.FALSE.equals(exists)) {
+                                return repo.save(creditCard.toBuilder().id(null).build()).map(CreditMapper::toPersonalDto);
+                            } else {
+                                PersonalCreditCardDto duplicateCreditCardDto = CreditMapper.toPersonalDto(creditCard);
+                                return Mono.error(new DuplicateCreditException(
+                                        String.format(Constants.CREDIT_DUPLICATED_BY_TWO_FIELDS,
+                                                Constants.CARD_NUMBER, duplicateCreditCardDto.getCardNumber(),
+                                                Constants.PERSONAL_CUSTOMER_ID, duplicateCreditCardDto.getPersonalCustomerId())));
+                            }
+                        }));
+    }
 
-        if (creditCardDto.getPersonalCustomerId() != null) {
-            return customerService.getPersonalCustomerById(creditCardDto.getPersonalCustomerId())
-                    .flatMap(customerDto -> repo.existsByPersonalCustomerId(customerDto.getId())
-                            .flatMap(exists -> (!exists) ? registeredCreditCard : Mono.error(new DuplicateCreditException(
-                                    String.format(Constants.CREDIT_DUPLICATED_BY_A_FIELD, Constants.PERSONAL_CUSTOMER_ID, customerDto.getId())))));
-        } else if (creditCardDto.getBusinessCustomerId() != null) {
-            return customerService.getBusinessCustomerById(creditCardDto.getBusinessCustomerId()).flatMap(customer -> registeredCreditCard);
-        }
-        return Mono.error(new BadRequestException(Constants.CUSTOMER_ID_IS_REQUIRED));
+    @Override
+    public Mono<BusinessCreditCardDto> registerBusiness(BusinessCreditCardDto creditCardDto) {
+        return customerService.getBusinessCustomerById(creditCardDto.getBusinessCustomerId())
+                .map(customerDto -> CreditMapper.toModel(creditCardDto))
+                .flatMap(creditCard -> repo.existsByCardNumber(creditCard.getCardNumber())
+                        .flatMap(exists -> {
+                            if (Boolean.FALSE.equals(exists)) {
+                                return repo.save(creditCard.toBuilder().id(null).build()).map(CreditMapper::toBusinessDto);
+                            } else {
+                                BusinessCreditCardDto duplicateCreditCardDto = CreditMapper.toBusinessDto(creditCard);
+                                return Mono.error(new DuplicateCreditException(
+                                        String.format(Constants.CREDIT_DUPLICATED_BY_TWO_FIELDS,
+                                                Constants.CARD_NUMBER, duplicateCreditCardDto.getCardNumber(),
+                                                Constants.BUSINESS_CUSTOMER_ID, duplicateCreditCardDto.getBusinessCustomerId())));
+                            }
+                        }));
     }
 
     @Override

@@ -6,6 +6,8 @@ import lombok.Getter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDate;
+
 @Getter
 @Builder(toBuilder = true)
 @Document(collection = Constants.CREDIT_CARDS_COLLECTION)
@@ -14,9 +16,9 @@ public class CreditCard {
     @Id
     private String id;
     private String cardNumber;
-    private String expirationDate;
+    private LocalDate expirationDate;
     private String cvv;
-    private String creditLine;
+    private Double creditLine;
     private String personalCustomerId;
     private String businessCustomerId;
 

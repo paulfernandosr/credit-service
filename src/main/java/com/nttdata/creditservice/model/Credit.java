@@ -13,8 +13,8 @@ public class Credit {
 
     @Id
     private String id;
-    private String amount;
-    private String interestRate;
+    private Double amount;
+    private Double interestRate;
     private String personalCustomerId;
     private String businessCustomerId;
 

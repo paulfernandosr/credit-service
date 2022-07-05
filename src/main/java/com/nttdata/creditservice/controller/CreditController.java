@@ -1,7 +1,9 @@
 package com.nttdata.creditservice.controller;
 
+import com.nttdata.creditservice.dto.BusinessCreditDto;
 import com.nttdata.creditservice.dto.CreditCardDto;
 import com.nttdata.creditservice.dto.CreditDto;
+import com.nttdata.creditservice.dto.PersonalCreditDto;
 import com.nttdata.creditservice.service.ICreditCardService;
 import com.nttdata.creditservice.service.ICreditService;
 import com.nttdata.creditservice.util.Constants;
@@ -39,10 +41,19 @@ public class CreditController {
                 .body(credit));
     }
 
-    @PostMapping(Constants.REGISTER_METHOD)
-    public Mono<ResponseEntity<CreditDto>> register(@RequestBody CreditDto credit, final ServerHttpRequest request) {
+    @PostMapping(Constants.REGISTER_PERSONAL_CREDIT_METHOD)
+    public Mono<ResponseEntity<PersonalCreditDto>> registerPersonal(@RequestBody PersonalCreditDto credit, final ServerHttpRequest request) {
         return validator.validate(credit)
-                .flatMap(validatedCredit -> service.register(validatedCredit)
+                .flatMap(validatedCredit -> service.registerPersonal(validatedCredit)
+                        .map(registeredCredit -> ResponseEntity.created(URI.create(request.getURI() + Constants.SLASH + registeredCredit.getId()))
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .body(registeredCredit)));
+    }
+
+    @PostMapping(Constants.REGISTER_BUSINESS_CREDIT_METHOD)
+    public Mono<ResponseEntity<BusinessCreditDto>> registerBusiness(@RequestBody BusinessCreditDto credit, final ServerHttpRequest request) {
+        return validator.validate(credit)
+                .flatMap(validatedCredit -> service.registerBusiness(validatedCredit)
                         .map(registeredCredit -> ResponseEntity.created(URI.create(request.getURI() + Constants.SLASH + registeredCredit.getId()))
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .body(registeredCredit)));

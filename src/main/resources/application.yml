@@ -11,8 +11,14 @@ spring:
 controller:
   credit:
     base-path: /credit
+    method:
+      register-personal: /personal
+      register-business: /business
   credit-card:
     base-path: /credit-card
+    method:
+      register-personal: /personal
+      register-business: /business
   method:
     getAll:
     getById: /{id}

@@ -7,6 +7,7 @@ import lombok.Getter;
 
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 
 @Getter
 @Builder(toBuilder = true)
@@ -19,13 +20,13 @@ public class CreditCardDto {
     private String cardNumber;
 
     @NotNull(message = Constants.NOT_NULL)
-    private String expirationDate;
-
-    @NotNull(message = Constants.NOT_NULL)
     private String cvv;
 
     @NotNull(message = Constants.NOT_NULL)
-    private String creditLine;
+    private LocalDate expirationDate;
+
+    @NotNull(message = Constants.NOT_NULL)
+    private Double creditLine;
 
     private String personalCustomerId;
     private String businessCustomerId;

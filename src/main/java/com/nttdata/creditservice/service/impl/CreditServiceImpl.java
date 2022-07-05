@@ -1,6 +1,9 @@
 package com.nttdata.creditservice.service.impl;
 
+import com.nttdata.creditservice.dto.BusinessCreditDto;
 import com.nttdata.creditservice.dto.CreditDto;
+import com.nttdata.creditservice.dto.PersonalCreditCardDto;
+import com.nttdata.creditservice.dto.PersonalCreditDto;
 import com.nttdata.creditservice.exception.BadRequestException;
 import com.nttdata.creditservice.exception.CreditNotFoundException;
 import com.nttdata.creditservice.exception.DuplicateCreditException;
@@ -47,6 +50,30 @@ public class CreditServiceImpl implements ICreditService {
             return customerService.getBusinessCustomerById(creditDto.getBusinessCustomerId()).flatMap(customer -> registeredCredit);
         }
         return Mono.error(new BadRequestException(Constants.CUSTOMER_ID_IS_REQUIRED));
+    }
+
+    @Override
+    public Mono<PersonalCreditDto> registerPersonal(PersonalCreditDto creditDto) {
+        return customerService.getPersonalCustomerById(creditDto.getPersonalCustomerId())
+                .map(customerDto -> CreditMapper.toModel(creditDto))
+                .flatMap(credit -> repo.existsByPersonalCustomerId(credit.getPersonalCustomerId())
+                        .flatMap(exists -> {
+                            if (Boolean.FALSE.equals(exists)) {
+                                return repo.save(credit.toBuilder().id(null).build()).map(CreditMapper::toPersonalDto);
+                            } else {
+                                PersonalCreditDto duplicateCreditDto = CreditMapper.toPersonalDto(credit);
+                                return Mono.error(new DuplicateCreditException(
+                                        String.format(Constants.CREDIT_DUPLICATED_BY_A_FIELD,
+                                                Constants.PERSONAL_CUSTOMER_ID, duplicateCreditDto.getPersonalCustomerId())));
+                            }
+                        }));
+    }
+
+    @Override
+    public Mono<BusinessCreditDto> registerBusiness(BusinessCreditDto creditDto) {
+        return customerService.getBusinessCustomerById(creditDto.getBusinessCustomerId())
+                .map(customerDto -> CreditMapper.toModel(creditDto))
+                .flatMap(credit -> repo.save(credit.toBuilder().id(null).build()).map(CreditMapper::toBusinessDto));
     }
 
     @Override

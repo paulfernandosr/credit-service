@@ -8,6 +8,6 @@ public interface ICreditCardRepo extends ReactiveMongoRepository<CreditCard, Str
 
     Mono<Boolean> existsByCardNumber(String cardNumber);
 
-    Mono<Boolean> existsByPersonalCustomerId(String personalCustomerId);
+    Mono<Boolean> existsByCardNumberOrPersonalCustomerId(String cardNumber, String personalCustomerId);
 
 }

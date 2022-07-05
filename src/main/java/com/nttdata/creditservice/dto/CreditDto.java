@@ -16,10 +16,10 @@ public class CreditDto {
     private String id;
 
     @NotNull(message = Constants.NOT_NULL)
-    private String amount;
+    private Double amount;
 
     @NotNull(message = Constants.NOT_NULL)
-    private String interestRate;
+    private Double interestRate;
 
     private String personalCustomerId;
     private String businessCustomerId;

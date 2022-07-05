@@ -23,6 +23,7 @@ public class Constants {
     public static final String ID = "id";
     public static final String CARD_NUMBER = "cardNumber";
     public static final String PERSONAL_CUSTOMER_ID = "personalCustomerId";
+    public static final String BUSINESS_CUSTOMER_ID = "businessCustomerId";
 
     // Exception messages
     public static final String CREDIT_NOT_FOUND = "Credit not found with %s: %s";
@@ -50,6 +51,10 @@ public class Constants {
     public static final String REGISTER_METHOD = "${controller.method.register}";
     public static final String UPDATE_BY_ID_METHOD = "${controller.method.update-by-id}";
     public static final String DELETE_BY_ID_METHOD = "${controller.method.delete-by-id}";
+    public static final String REGISTER_PERSONAL_CREDIT_METHOD = "${controller.credit.method.register-personal}";
+    public static final String REGISTER_BUSINESS_CREDIT_METHOD = "${controller.credit.method.register-business}";
+    public static final String REGISTER_PERSONAL_CREDIT_CARD_METHOD = "${controller.credit-card.method.register-personal}";
+    public static final String REGISTER_BUSINESS_CREDIT_CARD_METHOD = "${controller.credit-card.method.register-business}";
 
     // Path variables
     public static final String PATH_ID_VARIABLE = "${controller.path-variable.id}";

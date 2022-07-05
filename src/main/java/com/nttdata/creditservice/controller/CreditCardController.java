@@ -1,6 +1,8 @@
 package com.nttdata.creditservice.controller;
 
+import com.nttdata.creditservice.dto.BusinessCreditCardDto;
 import com.nttdata.creditservice.dto.CreditCardDto;
+import com.nttdata.creditservice.dto.PersonalCreditCardDto;
 import com.nttdata.creditservice.service.ICreditCardService;
 import com.nttdata.creditservice.util.Constants;
 import com.nttdata.creditservice.util.RequestValidator;
@@ -32,27 +34,36 @@ public class CreditCardController {
 
     @GetMapping(Constants.GET_BY_ID_METHOD)
     public Mono<ResponseEntity<CreditCardDto>> getById(@PathVariable(Constants.PATH_ID_VARIABLE) String id) {
-        return service.getById(id).map(credit -> ResponseEntity.ok()
+        return service.getById(id).map(creditCard -> ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(credit));
+                .body(creditCard));
     }
 
-    @PostMapping(Constants.REGISTER_METHOD)
-    public Mono<ResponseEntity<CreditCardDto>> register(@RequestBody CreditCardDto creditCard, final ServerHttpRequest request) {
+    @PostMapping(Constants.REGISTER_PERSONAL_CREDIT_CARD_METHOD)
+    public Mono<ResponseEntity<PersonalCreditCardDto>> registerPersonal(@RequestBody PersonalCreditCardDto creditCard, final ServerHttpRequest request) {
         return validator.validate(creditCard)
-                .flatMap(validatedCredit -> service.register(validatedCredit)
-                        .map(registeredCredit -> ResponseEntity.created(URI.create(request.getURI() + Constants.SLASH + registeredCredit.getId()))
+                .flatMap(validatedCreditCard -> service.registerPersonal(validatedCreditCard)
+                        .map(registeredCreditCard -> ResponseEntity.created(URI.create(request.getURI() + Constants.SLASH + registeredCreditCard.getId()))
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .body(registeredCredit)));
+                                .body(registeredCreditCard)));
+    }
+
+    @PostMapping(Constants.REGISTER_BUSINESS_CREDIT_CARD_METHOD)
+    public Mono<ResponseEntity<BusinessCreditCardDto>> registerBusiness(@RequestBody BusinessCreditCardDto creditCard, final ServerHttpRequest request) {
+        return validator.validate(creditCard)
+                .flatMap(validatedCreditCard -> service.registerBusiness(validatedCreditCard)
+                        .map(registeredCreditCard -> ResponseEntity.created(URI.create(request.getURI() + Constants.SLASH + registeredCreditCard.getId()))
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .body(registeredCreditCard)));
     }
 
     @PutMapping(Constants.UPDATE_BY_ID_METHOD)
     public Mono<ResponseEntity<CreditCardDto>> updateById(@PathVariable(Constants.PATH_ID_VARIABLE) String id, @RequestBody CreditCardDto creditCard) {
         return validator.validate(creditCard)
-                .flatMap(validatedCredit -> service.updateById(id, validatedCredit)
-                        .map(updatedCredit -> ResponseEntity.ok()
+                .flatMap(validatedCreditCard -> service.updateById(id, validatedCreditCard)
+                        .map(updatedCreditCard -> ResponseEntity.ok()
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .body(updatedCredit)));
+                                .body(updatedCreditCard)));
     }
 
     @DeleteMapping(Constants.DELETE_BY_ID_METHOD)
