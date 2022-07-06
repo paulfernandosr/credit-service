@@ -25,7 +25,7 @@ public class PersonalCreditCardDto {
     @NotNull(message = Constants.NOT_NULL)
     private String cvv;
 
-    private Double consumed;
+    private Double balance;
 
     @NotNull(message = Constants.NOT_NULL)
     @Min(value = 0, message = Constants.CREDIT_LINE_IS_LESS_THAN_ZERO)

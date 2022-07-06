@@ -43,7 +43,7 @@ public class CreditCardServiceImpl implements ICreditCardService {
                                 creditCard.getPersonalCustomerId())
                         .flatMap(exists -> {
                             if (Boolean.FALSE.equals(exists)) {
-                                return repo.save(creditCard.toBuilder().id(null).consumed(0.0).build()).map(CreditMapper::toPersonalDto);
+                                return repo.save(creditCard.toBuilder().id(null).balance(0.0).build()).map(CreditMapper::toPersonalDto);
                             } else {
                                 PersonalCreditCardDto duplicateCreditCardDto = CreditMapper.toPersonalDto(creditCard);
                                 return Mono.error(new DuplicateCreditException(
@@ -61,7 +61,7 @@ public class CreditCardServiceImpl implements ICreditCardService {
                 .flatMap(creditCard -> repo.existsByCardNumber(creditCard.getCardNumber())
                         .flatMap(exists -> {
                             if (Boolean.FALSE.equals(exists)) {
-                                return repo.save(creditCard.toBuilder().id(null).consumed(0.0).build()).map(CreditMapper::toBusinessDto);
+                                return repo.save(creditCard.toBuilder().id(null).balance(0.0).build()).map(CreditMapper::toBusinessDto);
                             } else {
                                 BusinessCreditCardDto duplicateCreditCardDto = CreditMapper.toBusinessDto(creditCard);
                                 return Mono.error(new DuplicateCreditException(
@@ -81,12 +81,12 @@ public class CreditCardServiceImpl implements ICreditCardService {
                                 .cardNumber(creditDtoReq.getCardNumber())
                                 .expirationDate(creditDtoReq.getExpirationDate())
                                 .cvv(creditDtoReq.getCvv())
-                                .consumed(creditDtoReq.getConsumed())
+                                .balance(creditDtoReq.getBalance())
                                 .creditLine(creditDtoReq.getCreditLine())
                                 .personalCustomerId(creditDtoReq.getPersonalCustomerId())
                                 .businessCustomerId(creditDtoReq.getBusinessCustomerId())
                                 .build()))
-                .flatMap(customer -> repo.save(customer).map(CreditMapper::toDto));
+                .flatMap(creditCard -> repo.save(creditCard).map(CreditMapper::toDto));
     }
 
     @Override

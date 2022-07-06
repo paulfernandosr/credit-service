@@ -72,7 +72,7 @@ public class CreditMapper {
                 .cardNumber(creditCardDto.getCardNumber())
                 .cvv(creditCardDto.getCvv())
                 .expirationDate(creditCardDto.getExpirationDate())
-                .consumed(creditCardDto.getConsumed())
+                .balance(creditCardDto.getBalance())
                 .creditLine(creditCardDto.getCreditLine())
                 .personalCustomerId(creditCardDto.getPersonalCustomerId())
                 .businessCustomerId(creditCardDto.getBusinessCustomerId())
@@ -85,7 +85,7 @@ public class CreditMapper {
                 .cardNumber(creditCard.getCardNumber())
                 .cvv(creditCard.getCvv())
                 .expirationDate(creditCard.getExpirationDate())
-                .consumed(creditCard.getConsumed())
+                .balance(creditCard.getBalance())
                 .creditLine(creditCard.getCreditLine())
                 .personalCustomerId(creditCard.getPersonalCustomerId())
                 .businessCustomerId(creditCard.getBusinessCustomerId())
@@ -98,7 +98,7 @@ public class CreditMapper {
                 .cardNumber(creditCardDto.getCardNumber())
                 .cvv(creditCardDto.getCvv())
                 .expirationDate(creditCardDto.getExpirationDate())
-                .consumed(creditCardDto.getConsumed())
+                .balance(creditCardDto.getBalance())
                 .creditLine(creditCardDto.getCreditLine())
                 .personalCustomerId(creditCardDto.getPersonalCustomerId())
                 .build();
@@ -110,7 +110,7 @@ public class CreditMapper {
                 .cardNumber(creditCardDto.getCardNumber())
                 .cvv(creditCardDto.getCvv())
                 .expirationDate(creditCardDto.getExpirationDate())
-                .consumed(creditCardDto.getConsumed())
+                .balance(creditCardDto.getBalance())
                 .creditLine(creditCardDto.getCreditLine())
                 .businessCustomerId(creditCardDto.getBusinessCustomerId())
                 .build();
@@ -122,7 +122,7 @@ public class CreditMapper {
                 .cardNumber(creditCard.getCardNumber())
                 .cvv(creditCard.getCvv())
                 .expirationDate(creditCard.getExpirationDate())
-                .consumed(creditCard.getConsumed())
+                .balance(creditCard.getBalance())
                 .creditLine(creditCard.getCreditLine())
                 .personalCustomerId(creditCard.getPersonalCustomerId())
                 .build();
@@ -134,7 +134,7 @@ public class CreditMapper {
                 .cardNumber(creditCard.getCardNumber())
                 .cvv(creditCard.getCvv())
                 .expirationDate(creditCard.getExpirationDate())
-                .consumed(creditCard.getConsumed())
+                .balance(creditCard.getBalance())
                 .creditLine(creditCard.getCreditLine())
                 .businessCustomerId(creditCard.getBusinessCustomerId())
                 .build();

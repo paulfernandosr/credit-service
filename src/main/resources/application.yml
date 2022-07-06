@@ -15,12 +15,12 @@ eureka:
 
 controller:
   credit:
-    base-path: /credit
+    base-path: /credits
     method:
       register-personal: /personal
       register-business: /business
   credit-card:
-    base-path: /credit-card
+    base-path: /credit-cards
     method:
       register-personal: /personal
       register-business: /business

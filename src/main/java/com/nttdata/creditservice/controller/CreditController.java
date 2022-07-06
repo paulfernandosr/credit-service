@@ -33,7 +33,7 @@ public class CreditController {
     }
 
     @GetMapping(Constants.GET_BY_ID_METHOD)
-    public Mono<ResponseEntity<CreditDto>> getById(@PathVariable(Constants.PATH_ID_VARIABLE) String id) {
+    public Mono<ResponseEntity<CreditDto>> getById(@PathVariable(Constants.ID_PATH_VARIABLE) String id) {
         return service.getById(id).map(credit -> ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(credit));
@@ -58,7 +58,7 @@ public class CreditController {
     }
 
     @PutMapping(Constants.UPDATE_BY_ID_METHOD)
-    public Mono<ResponseEntity<CreditDto>> updateById(@PathVariable(Constants.PATH_ID_VARIABLE) String id, @RequestBody CreditDto credit) {
+    public Mono<ResponseEntity<CreditDto>> updateById(@PathVariable(Constants.ID_PATH_VARIABLE) String id, @RequestBody CreditDto credit) {
         return validator.validate(credit)
                 .flatMap(validatedCredit -> service.updateById(id, validatedCredit)
                         .map(updatedCredit -> ResponseEntity.ok()
@@ -67,7 +67,7 @@ public class CreditController {
     }
 
     @DeleteMapping(Constants.DELETE_BY_ID_METHOD)
-    public Mono<ResponseEntity<Void>> deleteById(@PathVariable(Constants.PATH_ID_VARIABLE) String id) {
+    public Mono<ResponseEntity<Void>> deleteById(@PathVariable(Constants.ID_PATH_VARIABLE) String id) {
         return service.deleteById(id).thenReturn(new ResponseEntity<>(HttpStatus.OK));
     }
 

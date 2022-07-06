@@ -28,7 +28,7 @@ public class CreditCardDto {
 
     @NotNull(message = Constants.NOT_NULL)
     @Min(value = 0, message = Constants.CONSUMPTION_IS_LESS_THAN_ZERO)
-    private Double consumed;
+    private Double balance;
 
     @NotNull(message = Constants.NOT_NULL)
     @Min(value = 0, message = Constants.CREDIT_LINE_IS_LESS_THAN_ZERO)
