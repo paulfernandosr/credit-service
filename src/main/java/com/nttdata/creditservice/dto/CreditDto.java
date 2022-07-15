@@ -1,42 +1,27 @@
 package com.nttdata.creditservice.dto;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.nttdata.creditservice.util.Constants;
 import lombok.Builder;
 import lombok.Getter;
 
-import javax.validation.constraints.AssertTrue;
-import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 
 @Getter
 @Builder(toBuilder = true)
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class CreditDto {
 
-    private String id;
+    private final String id;
 
-    @NotNull(message = Constants.NOT_NULL)
-    private Double amount;
+    private final String cardNumber;
+    private final String cvv;
+    private final Double balance;
+    private final Double creditLine;
+    private final LocalDate expirationDate;
 
-    @NotNull(message = Constants.NOT_NULL)
-    private Double interestRate;
+    private final Double amountToPay;
+    private final Double amountPaid;
+    private final LocalDate paymentDate;
 
-    private String personalCustomerId;
-    private String businessCustomerId;
-
-    @AssertTrue(message = Constants.CUSTOMER_ID_IS_REQUIRED)
-    private boolean isPersonalCustomerId() {
-        return isPersonalCustomerIdOrBusinessCustomerId();
-    }
-
-    @AssertTrue(message = Constants.CUSTOMER_ID_IS_REQUIRED)
-    private boolean isBusinessCustomerId() {
-        return isPersonalCustomerIdOrBusinessCustomerId();
-    }
-
-    private boolean isPersonalCustomerIdOrBusinessCustomerId() {
-        return (personalCustomerId != null && businessCustomerId == null)
-                || (personalCustomerId == null && businessCustomerId != null);
-    }
+    private final String type;
+    private final String customerId;
 
 }

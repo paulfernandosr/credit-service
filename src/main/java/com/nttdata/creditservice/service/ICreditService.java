@@ -1,6 +1,9 @@
 package com.nttdata.creditservice.service;
 
-import com.nttdata.creditservice.dto.*;
+import com.nttdata.creditservice.dto.CreditDto;
+import com.nttdata.creditservice.dto.request.BusinessCreditDto;
+import com.nttdata.creditservice.dto.request.CreditCardDto;
+import com.nttdata.creditservice.dto.request.PersonalCreditDto;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -8,11 +11,17 @@ public interface ICreditService {
 
     Flux<CreditDto> getAll();
 
+    Flux<CreditDto> getByCustomerId(String customerId);
+
     Mono<CreditDto> getById(String id);
 
-    Mono<PersonalCreditDto> registerPersonal(PersonalCreditDto creditDto);
+    Mono<CreditDto> registerPersonalCredit(PersonalCreditDto personalCreditDto);
 
-    Mono<BusinessCreditDto> registerBusiness(BusinessCreditDto creditDto);
+    Mono<CreditDto> registerBusinessCredit(BusinessCreditDto businessCreditDto);
+
+    Mono<CreditDto> registerPersonalCreditCard(CreditCardDto creditCardDto);
+
+    Mono<CreditDto> registerBusinessCreditCard(CreditCardDto creditCardDto);
 
     Mono<CreditDto> updateById(String id, CreditDto creditDto);
 

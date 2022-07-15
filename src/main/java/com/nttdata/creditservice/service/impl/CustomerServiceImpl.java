@@ -1,17 +1,18 @@
 package com.nttdata.creditservice.service.impl;
 
 import com.nttdata.creditservice.config.PropertiesConfig;
-import com.nttdata.creditservice.dto.BusinessCustomerDto;
-import com.nttdata.creditservice.dto.ErrorResponseBodyDto;
-import com.nttdata.creditservice.dto.PersonalCustomerDto;
+import com.nttdata.creditservice.dto.CustomerDto;
 import com.nttdata.creditservice.exception.DomainException;
 import com.nttdata.creditservice.service.ICustomerService;
-import com.nttdata.creditservice.util.Constants;
-import com.nttdata.creditservice.util.JacksonUtil;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.timelimiter.annotation.TimeLimiter;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 import reactor.core.publisher.Mono;
+
+import java.util.concurrent.TimeoutException;
 
 @Service
 public class CustomerServiceImpl implements ICustomerService {
@@ -24,20 +25,21 @@ public class CustomerServiceImpl implements ICustomerService {
         this.propertiesConfig = propertiesConfig;
     }
 
-    public Mono<PersonalCustomerDto> getPersonalCustomerById(String id) {
-        return webClient.get().uri(propertiesConfig.getPersonalCustomerByIdMethod, id).retrieve()
-                .bodyToMono(PersonalCustomerDto.class)
-                .onErrorResume(WebClientResponseException.class, e ->
-                        Mono.error(new DomainException(e.getStatusCode(), String.format(Constants.ERROR_RESPONSE_IN_SERVICE,
-                                e.getMessage(), JacksonUtil.jsonStringToObject(e.getResponseBodyAsString(), ErrorResponseBodyDto.class).getMessage()))));
+    @Override
+    @CircuitBreaker(name = "customerService", fallbackMethod = "fallbackGetCustomerById")
+    @TimeLimiter(name = "customerService", fallbackMethod = "fallbackGetCustomerById")
+    public Mono<CustomerDto> getCustomerById(String id) {
+        return webClient.get().uri(propertiesConfig.getCustomerByIdMethod, id)
+                .retrieve()
+                .bodyToMono(CustomerDto.class);
     }
 
-    public Mono<BusinessCustomerDto> getBusinessCustomerById(String id) {
-        return webClient.get().uri(propertiesConfig.getBusinessCustomerByIdMethod, id).retrieve()
-                .bodyToMono(BusinessCustomerDto.class)
-                .onErrorResume(WebClientResponseException.class, e ->
-                        Mono.error(new DomainException(e.getStatusCode(), String.format(Constants.ERROR_RESPONSE_IN_SERVICE,
-                                e.getMessage(), JacksonUtil.jsonStringToObject(e.getResponseBodyAsString(), ErrorResponseBodyDto.class).getMessage()))));
+    private Mono<CustomerDto> fallbackGetCustomerById(String id, WebClientResponseException e) {
+        return Mono.error(new DomainException(e.getStatusCode(), e.getMessage()));
+    }
+
+    private Mono<CustomerDto> fallbackGetCustomerById(String id, TimeoutException e) {
+        return Mono.error(new DomainException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage()));
     }
 
 }

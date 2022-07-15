@@ -1,4 +1,4 @@
-package com.nttdata.creditservice.dto;
+package com.nttdata.creditservice.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.nttdata.creditservice.util.Constants;
@@ -12,26 +12,24 @@ import java.time.LocalDate;
 @Getter
 @Builder(toBuilder = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class PersonalCreditCardDto {
-
-    private String id;
+public class CreditCardDto {
 
     @NotNull(message = Constants.NOT_NULL)
     private String cardNumber;
 
     @NotNull(message = Constants.NOT_NULL)
-    private LocalDate expirationDate;
+    private String cvv;
 
     @NotNull(message = Constants.NOT_NULL)
-    private String cvv;
+    private LocalDate expirationDate;
 
     private Double balance;
 
     @NotNull(message = Constants.NOT_NULL)
-    @Min(value = 0, message = Constants.CREDIT_LINE_IS_LESS_THAN_ZERO)
+    @Min(value = 0, message = Constants.LESS_THAN_ZERO)
     private Double creditLine;
 
     @NotNull(message = Constants.NOT_NULL)
-    private String personalCustomerId;
+    private String customerId;
 
 }

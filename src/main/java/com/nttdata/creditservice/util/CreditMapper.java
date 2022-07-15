@@ -1,8 +1,10 @@
 package com.nttdata.creditservice.util;
 
-import com.nttdata.creditservice.dto.*;
+import com.nttdata.creditservice.dto.CreditDto;
+import com.nttdata.creditservice.dto.request.BusinessCreditDto;
+import com.nttdata.creditservice.dto.request.CreditCardDto;
+import com.nttdata.creditservice.dto.request.PersonalCreditDto;
 import com.nttdata.creditservice.model.Credit;
-import com.nttdata.creditservice.model.CreditCard;
 
 public class CreditMapper {
 
@@ -10,133 +12,60 @@ public class CreditMapper {
         throw new IllegalStateException(Constants.UTILITY_CLASS);
     }
 
-    public static Credit toModel(CreditDto creditDto) {
+    public static Credit toCredit(CreditDto creditDto) {
         return Credit.builder()
                 .id(creditDto.getId())
-                .amount(creditDto.getAmount())
-                .interestRate(creditDto.getInterestRate())
-                .personalCustomerId(creditDto.getPersonalCustomerId())
-                .businessCustomerId(creditDto.getBusinessCustomerId())
+                .cardNumber(creditDto.getCardNumber())
+                .cvv(creditDto.getCvv())
+                .expirationDate(creditDto.getExpirationDate())
+                .balance(creditDto.getBalance())
+                .creditLine(creditDto.getCreditLine())
+                .amountToPay(creditDto.getAmountToPay())
+                .paymentDate(creditDto.getPaymentDate())
+                .type(creditDto.getType())
+                .customerId(creditDto.getCustomerId())
                 .build();
     }
 
-    public static CreditDto toDto(Credit credit) {
+    public static CreditDto toCreditDto(Credit credit) {
         return CreditDto.builder()
                 .id(credit.getId())
-                .amount(credit.getAmount())
-                .interestRate(credit.getInterestRate())
-                .personalCustomerId(credit.getPersonalCustomerId())
-                .businessCustomerId(credit.getBusinessCustomerId())
+                .cardNumber(credit.getCardNumber())
+                .cvv(credit.getCvv())
+                .expirationDate(credit.getExpirationDate())
+                .balance(credit.getBalance())
+                .creditLine(credit.getCreditLine())
+                .amountToPay(credit.getAmountToPay())
+                .paymentDate(credit.getPaymentDate())
+                .type(credit.getType())
+                .customerId(credit.getCustomerId())
                 .build();
     }
 
-    public static Credit toModel(PersonalCreditDto creditDto) {
+    public static Credit toCredit(CreditCardDto creditCardDto) {
         return Credit.builder()
-                .id(creditDto.getId())
-                .amount(creditDto.getAmount())
-                .interestRate(creditDto.getInterestRate())
-                .personalCustomerId(creditDto.getPersonalCustomerId())
+                .cardNumber(creditCardDto.getCardNumber())
+                .cvv(creditCardDto.getCvv())
+                .expirationDate(creditCardDto.getExpirationDate())
+                .balance(creditCardDto.getCreditLine())
+                .creditLine(creditCardDto.getCreditLine())
+                .customerId(creditCardDto.getCustomerId())
                 .build();
     }
 
-    public static Credit toModel(BusinessCreditDto creditDto) {
+    public static Credit toCredit(PersonalCreditDto personalCreditDto) {
         return Credit.builder()
-                .id(creditDto.getId())
-                .amount(creditDto.getAmount())
-                .interestRate(creditDto.getInterestRate())
-                .businessCustomerId(creditDto.getBusinessCustomerId())
+                .amountToPay(personalCreditDto.getAmountToPay())
+                .paymentDate(personalCreditDto.getPaymentDate())
+                .customerId(personalCreditDto.getCustomerId())
                 .build();
     }
 
-    public static PersonalCreditDto toPersonalDto(Credit credit) {
-        return PersonalCreditDto.builder()
-                .id(credit.getId())
-                .amount(credit.getAmount())
-                .interestRate(credit.getInterestRate())
-                .personalCustomerId(credit.getPersonalCustomerId())
-                .build();
-    }
-
-    public static BusinessCreditDto toBusinessDto(Credit credit) {
-        return BusinessCreditDto.builder()
-                .id(credit.getId())
-                .amount(credit.getAmount())
-                .interestRate(credit.getInterestRate())
-                .businessCustomerId(credit.getBusinessCustomerId())
-                .build();
-    }
-
-    public static CreditCard toModel(CreditCardDto creditCardDto) {
-        return CreditCard.builder()
-                .id(creditCardDto.getId())
-                .cardNumber(creditCardDto.getCardNumber())
-                .cvv(creditCardDto.getCvv())
-                .expirationDate(creditCardDto.getExpirationDate())
-                .balance(creditCardDto.getBalance())
-                .creditLine(creditCardDto.getCreditLine())
-                .personalCustomerId(creditCardDto.getPersonalCustomerId())
-                .businessCustomerId(creditCardDto.getBusinessCustomerId())
-                .build();
-    }
-
-    public static CreditCardDto toDto(CreditCard creditCard) {
-        return CreditCardDto.builder()
-                .id(creditCard.getId())
-                .cardNumber(creditCard.getCardNumber())
-                .cvv(creditCard.getCvv())
-                .expirationDate(creditCard.getExpirationDate())
-                .balance(creditCard.getBalance())
-                .creditLine(creditCard.getCreditLine())
-                .personalCustomerId(creditCard.getPersonalCustomerId())
-                .businessCustomerId(creditCard.getBusinessCustomerId())
-                .build();
-    }
-
-    public static CreditCard toModel(PersonalCreditCardDto creditCardDto) {
-        return CreditCard.builder()
-                .id(creditCardDto.getId())
-                .cardNumber(creditCardDto.getCardNumber())
-                .cvv(creditCardDto.getCvv())
-                .expirationDate(creditCardDto.getExpirationDate())
-                .balance(creditCardDto.getBalance())
-                .creditLine(creditCardDto.getCreditLine())
-                .personalCustomerId(creditCardDto.getPersonalCustomerId())
-                .build();
-    }
-
-    public static CreditCard toModel(BusinessCreditCardDto creditCardDto) {
-        return CreditCard.builder()
-                .id(creditCardDto.getId())
-                .cardNumber(creditCardDto.getCardNumber())
-                .cvv(creditCardDto.getCvv())
-                .expirationDate(creditCardDto.getExpirationDate())
-                .balance(creditCardDto.getBalance())
-                .creditLine(creditCardDto.getCreditLine())
-                .businessCustomerId(creditCardDto.getBusinessCustomerId())
-                .build();
-    }
-
-    public static PersonalCreditCardDto toPersonalDto(CreditCard creditCard) {
-        return PersonalCreditCardDto.builder()
-                .id(creditCard.getId())
-                .cardNumber(creditCard.getCardNumber())
-                .cvv(creditCard.getCvv())
-                .expirationDate(creditCard.getExpirationDate())
-                .balance(creditCard.getBalance())
-                .creditLine(creditCard.getCreditLine())
-                .personalCustomerId(creditCard.getPersonalCustomerId())
-                .build();
-    }
-
-    public static BusinessCreditCardDto toBusinessDto(CreditCard creditCard) {
-        return BusinessCreditCardDto.builder()
-                .id(creditCard.getId())
-                .cardNumber(creditCard.getCardNumber())
-                .cvv(creditCard.getCvv())
-                .expirationDate(creditCard.getExpirationDate())
-                .balance(creditCard.getBalance())
-                .creditLine(creditCard.getCreditLine())
-                .businessCustomerId(creditCard.getBusinessCustomerId())
+    public static Credit toCredit(BusinessCreditDto businessCreditDto) {
+        return Credit.builder()
+                .amountToPay(businessCreditDto.getAmountToPay())
+                .paymentDate(businessCreditDto.getPaymentDate())
+                .customerId(businessCreditDto.getCustomerId())
                 .build();
     }
 
