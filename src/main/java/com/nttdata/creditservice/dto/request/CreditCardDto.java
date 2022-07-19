@@ -21,13 +21,16 @@ public class CreditCardDto {
     private String cvv;
 
     @NotNull(message = Constants.NOT_NULL)
-    private LocalDate expirationDate;
+    private LocalDate cardExpirationDate;
 
     private Double balance;
 
     @NotNull(message = Constants.NOT_NULL)
     @Min(value = 0, message = Constants.LESS_THAN_ZERO)
     private Double creditLine;
+
+    @NotNull(message = Constants.NOT_NULL)
+    private final LocalDate paymentDate;
 
     @NotNull(message = Constants.NOT_NULL)
     private String customerId;

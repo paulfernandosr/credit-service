@@ -36,7 +36,7 @@ public class Constants {
     public static final String CREDIT_CARD_DUPLICATED_BY_TWO_FIELDS = "There is already a credit card with %s: %s or %s: %s";
     public static final String UTILITY_CLASS = "Utility class";
     public static final String ERROR_RESPONSE_IN_SERVICE = "%s -> %s";
-
+    public static final String CUSTOMER_WITH_OVERDUE_DEBT = "El cliente con %s: %s posee alguna deuda vencida en algún producto de crédito";
 
     // Collections
     public static final String CREDITS_COLLECTION = "credits";
@@ -47,6 +47,7 @@ public class Constants {
     // Method paths
     public static final String GET_ALL_METHOD = "/all";
     public static final String GET_BY_ID_METHOD = "/{" + ID + "}";
+    public static final String GENERATE_REPORT_METHOD = "/report";
     public static final String GET_BY_CUSTOMER_ID_METHOD = "/customers/{" + CUSTOMER_ID + "}";
     public static final String REGISTER_PERSONAL_CREDIT_METHOD = "/personal-credits";
     public static final String REGISTER_BUSINESS_CREDIT_METHOD = "/business-credits";
@@ -58,13 +59,20 @@ public class Constants {
     // Types
     public static final String PERSONAL_CREDIT = "CREDIT.PERSONAL";
     public static final String BUSINESS_CREDIT = "CREDIT.BUSINESS";
-    public static final String PERSONAL_CREDIT_CARD = "CREDIT_CARD.PERSONAL";
-    public static final String BUSINESS_CREDIT_CARD = "CREDIT_CARD.BUSINESS";
-    public static final String PERSONAL_CUSTOMER = "PERSONAL";
-    public static final String BUSINESS_CUSTOMER = "BUSINESS";
+    public static final String PERSONAL_CREDIT_CARD = "CREDIT.CREDIT_CARD.PERSONAL";
+    public static final String BUSINESS_CREDIT_CARD = "CREDIT.CREDIT_CARD.BUSINESS";
+    public static final String PERSONAL_CUSTOMER = "CUSTOMER.PERSONAL";
+    public static final String BUSINESS_CUSTOMER = "CUSTOMER.BUSINESS";
+
+    public static final String CREDIT = "CREDIT";
+    public static final String CREDIT_CARD = "CREDIT.CREDIT_CARD";
 
     // Customer service
     public static final String CUSTOMER_SERVICE_BASE_URL = "${customerService.baseUrl}";
     public static final String GET_CUSTOMER_BY_ID_METHOD = "${customerService.method.getCustomerById}";
+
+    // Movement service
+    public static final String MOVEMENT_SERVICE_BASE_URL = "${movementService.baseUrl}";
+    public static final String GET_MOVEMENTS_BY_CREDIT_ID_METHOD = "${movementService.method.getMovementsByCreditId}";
 
 }

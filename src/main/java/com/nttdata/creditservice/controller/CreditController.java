@@ -3,6 +3,7 @@ package com.nttdata.creditservice.controller;
 import com.nttdata.creditservice.dto.CreditDto;
 import com.nttdata.creditservice.dto.request.BusinessCreditDto;
 import com.nttdata.creditservice.dto.request.CreditCardDto;
+import com.nttdata.creditservice.dto.request.GenerateReportDto;
 import com.nttdata.creditservice.dto.request.PersonalCreditDto;
 import com.nttdata.creditservice.service.ICreditService;
 import com.nttdata.creditservice.util.Constants;
@@ -43,6 +44,13 @@ public class CreditController {
     @GetMapping(Constants.GET_BY_ID_METHOD)
     public Mono<ResponseEntity<CreditDto>> getById(@PathVariable(Constants.ID) String id) {
         return service.getById(id).map(credit -> ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(credit));
+    }
+
+    @GetMapping(Constants.GENERATE_REPORT_METHOD)
+    public Mono<ResponseEntity<CreditDto>> generateReport(@RequestBody GenerateReportDto generateReport) {
+        return service.generateReportById(generateReport).map(credit -> ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(credit));
     }

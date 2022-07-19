@@ -13,4 +13,10 @@ public class PropertiesConfig {
     @Value(Constants.GET_CUSTOMER_BY_ID_METHOD)
     public String getCustomerByIdMethod;
 
+    @Value(Constants.MOVEMENT_SERVICE_BASE_URL)
+    public String movementServiceBaseUrl;
+
+    @Value(Constants.GET_MOVEMENTS_BY_CREDIT_ID_METHOD)
+    public String getMovementsByCreditId;
+
 }

@@ -24,8 +24,8 @@ public class Credit {
 
     private Double amountToPay;
     private Double amountPaid;
-    private LocalDate paymentDate;
 
+    private LocalDate paymentDate;
     private String type;
     private String customerId;
 
