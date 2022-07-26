@@ -68,11 +68,11 @@ public class Constants {
     public static final String CREDIT_CARD = "CREDIT.CREDIT_CARD";
 
     // Customer service
-    public static final String CUSTOMER_SERVICE_BASE_URL = "${customerService.baseUrl}";
-    public static final String GET_CUSTOMER_BY_ID_METHOD = "${customerService.method.getCustomerById}";
+    public static final String CUSTOMER_SERVICE_BASE_URL = "${customerService.baseUrl:http://localhost:8099/customer-service}";
+    public static final String GET_CUSTOMER_BY_ID_METHOD = "${customerService.method.getCustomerById:/customers/{id}}";
 
     // Movement service
-    public static final String MOVEMENT_SERVICE_BASE_URL = "${movementService.baseUrl}";
-    public static final String GET_MOVEMENTS_BY_CREDIT_ID_METHOD = "${movementService.method.getMovementsByCreditId}";
+    public static final String MOVEMENT_SERVICE_BASE_URL = "${movementService.baseUrl:http://localhost:8099/movement-service}";
+    public static final String GET_MOVEMENTS_BY_CREDIT_ID_METHOD = "${movementService.method.getMovementsByCreditId:/movements/credits/{creditId}}";
 
 }
