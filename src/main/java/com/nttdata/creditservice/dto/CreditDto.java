@@ -1,5 +1,6 @@
 package com.nttdata.creditservice.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -8,6 +9,7 @@ import java.util.List;
 
 @Getter
 @Builder(toBuilder = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class CreditDto {
 
     private final String id;
